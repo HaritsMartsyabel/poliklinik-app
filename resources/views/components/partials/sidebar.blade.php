@@ -8,13 +8,11 @@
                  class="w-10 h-10 rounded-xl object-cover">
 
             <div>
-
                 <div class="font-bold text-white text-lg leading-tight">
                     Poliklinik
                 </div>
 
                 @if(request()->is('admin*'))
-
                     <span class="text-[10px] font-bold uppercase tracking-wider
                                  bg-indigo-400/20 text-indigo-300 border border-indigo-400/30
                                  px-2 py-0.5 rounded-md">
@@ -22,7 +20,6 @@
                     </span>
 
                 @elseif(request()->is('dokter*'))
-
                     <span class="text-[10px] font-bold uppercase tracking-wider
                                  bg-purple-400/20 text-purple-300 border border-purple-400/30
                                  px-2 py-0.5 rounded-md">
@@ -30,17 +27,14 @@
                     </span>
 
                 @elseif(request()->is('pasien*'))
-
                     <span class="text-[10px] font-bold uppercase tracking-wider
                                  bg-amber-400/20 text-amber-300 border border-amber-400/30
                                  px-2 py-0.5 rounded-md">
                         Pasien
                     </span>
-
                 @endif
 
             </div>
-
         </div>
     </div>
 
@@ -51,9 +45,7 @@
 
         @php
         $baseLink = "flex items-center gap-3 px-4 py-2.5 rounded-lg text-sm transition-all duration-200";
-
         $inactive = "text-slate-300 hover:bg-white/10 hover:text-white";
-
         $active = "bg-gradient-to-r from-white/20 to-white/5
                    text-white font-semibold border border-indigo-400 border-2";
         @endphp
@@ -69,62 +61,34 @@
 
             <div class="space-y-1">
 
-                {{-- DASHBOARD --}}
                 <a href="{{ route('admin.dashboard') }}"
-                   class="{{ $baseLink }}
-                          {{ request()->routeIs('admin.dashboard') ? $active : $inactive }}">
-
+                   class="{{ $baseLink }} {{ request()->routeIs('admin.dashboard') ? $active : $inactive }}">
                     <i class="fas fa-gauge-high w-4 text-center"></i>
                     Dashboard Admin
-
                 </a>
 
-
-
-                {{-- POLI --}}
                 <a href="{{ route('polis.index') }}"
-                   class="{{ $baseLink }}
-                          {{ request()->routeIs('polis.*') ? $active : $inactive }}">
-
+                   class="{{ $baseLink }} {{ request()->routeIs('polis.*') ? $active : $inactive }}">
                     <i class="fas fa-hospital w-4 text-center"></i>
                     Manajemen Poli
-
                 </a>
 
-
-
-                {{-- DOKTER --}}
                 <a href="{{ route('dokter.index') }}"
-                   class="{{ $baseLink }}
-                          {{ request()->routeIs('dokter.*') ? $active : $inactive }}">
-
+                   class="{{ $baseLink }} {{ request()->routeIs('dokter.*') ? $active : $inactive }}">
                     <i class="fas fa-user-doctor w-4 text-center"></i>
                     Manajemen Dokter
-
                 </a>
 
-
-
-                {{-- PASIEN --}}
                 <a href="{{ route('pasien.index') }}"
-                   class="{{ $baseLink }}
-                          {{ request()->routeIs('pasien.*') ? $active : $inactive }}">
-
+                   class="{{ $baseLink }} {{ request()->routeIs('pasien.*') ? $active : $inactive }}">
                     <i class="fas fa-bed-pulse w-4 text-center"></i>
                     Manajemen Pasien
-
                 </a>
 
-
-
-                {{-- OBAT --}}
                 <a href="{{ route('obat.index') }}"
-                   class="{{ $baseLink }}
-                          {{ request()->routeIs('obat.*') ? $active : $inactive }}">
-
+                   class="{{ $baseLink }} {{ request()->routeIs('obat.*') ? $active : $inactive }}">
                     <i class="fas fa-pills w-4 text-center"></i>
                     Manajemen Obat
-
                 </a>
 
             </div>
@@ -143,12 +107,16 @@
             <div class="space-y-1">
 
                 <a href="{{ route('pasien.dashboard') }}"
-                   class="{{ $baseLink }}
-                          {{ request()->routeIs('pasien.dashboard') ? $active : $inactive }}">
-
+                   class="{{ $baseLink }} {{ request()->routeIs('pasien.dashboard') ? $active : $inactive }}">
                     <i class="fas fa-house-medical w-4 text-center"></i>
                     Dashboard Pasien
+                </a>
 
+                {{-- TAMBAHAN SESUAI CONTOH --}}
+                <a href="{{ route('pasien.daftar') }}"
+                   class="{{ $baseLink }} {{ request()->routeIs('pasien.daftar') ? $active : $inactive }}">
+                    <i class="fas fa-house-medical w-4 text-center"></i>
+                    Pendaftaran Periksa
                 </a>
 
             </div>
@@ -167,12 +135,15 @@
             <div class="space-y-1">
 
                 <a href="{{ route('dokter.dashboard') }}"
-                   class="{{ $baseLink }}
-                          {{ request()->routeIs('dokter.dashboard') ? $active : $inactive }}">
-
+                   class="{{ $baseLink }} {{ request()->routeIs('dokter.dashboard') ? $active : $inactive }}">
                     <i class="fas fa-stethoscope w-4 text-center"></i>
                     Dashboard Dokter
+                </a>
 
+                <a href="{{ route('jadwal-periksa.index') }}"
+                   class="{{ $baseLink }} {{ request()->routeIs('jadwal-periksa.*') ? $active : $inactive }}">
+                    <i class="fas fa-stethoscope w-4 text-center"></i>
+                    Jadwal Periksa
                 </a>
 
             </div>
@@ -193,10 +164,8 @@
                     class="w-full flex items-center justify-center gap-2
                            px-4 py-2.5 rounded-lg bg-red-500 hover:bg-red-600
                            text-white text-sm font-semibold transition-all">
-
                 <i class="fas fa-right-from-bracket w-4"></i>
                 Keluar
-
             </button>
 
         </form>
