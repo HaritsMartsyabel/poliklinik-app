@@ -9,6 +9,7 @@ use App\Models\Obat;
 use App\Models\Periksa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class PeriksaPasienController extends Controller
 {
@@ -42,20 +43,45 @@ class PeriksaPasienController extends Controller
 
         $obatIds = json_decode($request->obat_json, true);
 
-        $periksa = Periksa::create([
-            'id_daftar_poli' => $request->id_daftar_poli,
-            'tgl_periksa' => now(),
-            'catatan' => $request->catatan,
-            'biaya_periksa' => $request->biaya_periksa + 150000,
-        ]);
+        DB::beginTransaction();
 
-        foreach ($obatIds as $idObat) {
-            DetailPeriksa::create([
-                'id_periksa' => $periksa->id,
-                'id_obat' => $idObat,
+        try {
+            $periksa = Periksa::create([
+                'id_daftar_poli' => $request->id_daftar_poli,
+                'tgl_periksa' => now(),
+                'catatan' => $request->catatan,
+                'biaya_periksa' => $request->biaya_periksa + 150000,
             ]);
-        }
 
-        return redirect()->route('periksa-pasien.index')->with('success', 'Data periksa berhasil disimpan.');
+            foreach ($obatIds as $idObat) {
+                $obat = Obat::findOrFail($idObat);
+
+                if ($obat->stok <= 0) {
+                    DB::rollBack();
+                    return redirect()->back()
+                        ->withInput()
+                        ->with('error', 'Stok obat '.$obat->nama_obat.' habis.');
+                }
+
+                DetailPeriksa::create([
+                    'id_periksa' => $periksa->id,
+                    'id_obat' => $idObat,
+                ]);
+
+                $obat->stok = $obat->stok - 1;
+                $obat->save();
+            }
+
+            DB::commit();
+
+            return redirect()->route('periksa-pasien.index')
+                ->with('success', 'Data periksa berhasil disimpan.');
+        } catch (\Exception $e) {
+            DB::rollBack();
+
+            return redirect()->back()
+                ->withInput()
+                ->with('error', $e->getMessage());
+        }
     }
 }
