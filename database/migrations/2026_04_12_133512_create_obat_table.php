@@ -20,6 +20,8 @@ return new class extends Migration
 
             $table->integer('harga');
 
+            $table->integer('stok')->default(0);
+
             $table->timestamps();
         });
     }

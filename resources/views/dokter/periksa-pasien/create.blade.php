@@ -19,13 +19,6 @@
         </div>
     @endif
 
-    {{-- Alert Error --}}
-    @if(session('error'))
-        <div class="alert alert-error mb-5">
-            <span>{{ session('error') }}</span>
-        </div>
-    @endif
-
     {{-- Validation Error --}}
     @if ($errors->any())
         <div class="alert alert-error mb-5">
@@ -66,8 +59,8 @@
                             <option
                                 value="{{ $obat->id }}"
                                 data-nama="{{ $obat->nama_obat }}"
-                                data-harga="{{ $obat->harga }}"
-                                @if($obat->stok <= 0) disabled @endif>
+                                data-harga="{{ $obat->harga }}">
+                            
 
                                 {{ $obat->nama_obat }}
                                 - Rp{{ number_format($obat->harga) }}

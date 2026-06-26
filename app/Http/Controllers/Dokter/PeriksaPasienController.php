@@ -57,11 +57,15 @@ class PeriksaPasienController extends Controller
                 $obat = Obat::findOrFail($idObat);
 
                 if ($obat->stok <= 0) {
-                    DB::rollBack();
-                    return redirect()->back()
-                        ->withInput()
-                        ->with('error', 'Stok obat '.$obat->nama_obat.' habis.');
-                }
+    DB::rollBack();
+
+    return redirect()->back()
+        ->withInput()
+        ->with(
+            'error',
+            '❌ Pemeriksaan gagal! Stok obat "' . $obat->nama_obat . '" telah habis. Silakan pilih obat lain.'
+        );
+}
 
                 DetailPeriksa::create([
                     'id_periksa' => $periksa->id,
